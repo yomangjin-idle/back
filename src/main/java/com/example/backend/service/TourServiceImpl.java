@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.net.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -94,10 +92,15 @@ public class TourServiceImpl implements TourService {
                 new NoSuchElementException("해당 id의 여행이 없습니다."));
 
         try {
+            String proxyHost = "http://krmp-proxy.9rum.cc";
+            int proxyPort = 3128;
+
+            Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyHost, proxyPort));
+
             String text = URLEncoder.encode(tour.getContent(), "UTF-8"); // 13자
             String apiURL = "https://naveropenapi.apigw.ntruss.com/tts-premium/v1/tts";
             URL url = new URL(apiURL);
-            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            HttpURLConnection con = (HttpURLConnection)url.openConnection(proxy);
             con.setRequestMethod("POST");
             con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", clientId);
             con.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
