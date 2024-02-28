@@ -9,8 +9,13 @@ import com.example.backend.repository.SpeakFileRepository;
 import com.example.backend.repository.TourRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -19,6 +24,11 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class TourServiceImpl implements TourService {
+    @Value("${naver.clientId}")
+    String clientId; //애플리케이션 클라이언트 아이디값";
+
+    @Value("${naver.clientSecret}")
+    String clientSecret; //애플리케이션 클라이언트 시크릿값";
 
     private final TourRepository tourRepository;
     private final NearTourRepository nearTourRepository;
@@ -48,8 +58,6 @@ public class TourServiceImpl implements TourService {
                 new NoSuchElementException("해당 id의 여행이 없습니다."));
 
         List<NearTour> test = nearTourRepository.findByTourId(tourId);
-        log.info("===========================");
-        log.info(String.valueOf(test.size()));
         List<NearTourResponse> nearTours = nearTourRepository.findByTourId(tourId).stream().map(near -> {
             return NearTourResponse.builder()
                     .name(near.getName())
@@ -57,9 +65,6 @@ public class TourServiceImpl implements TourService {
                     .dis(near.getDis()).build();
         }).collect(Collectors.toList());
 
-
-        log.info("========== 근처 유적지에 대한 정보입니다.");
-        log.info(String.valueOf(nearTours.size()));
         for(NearTourResponse n: nearTours) {
             log.info(n.toString());
         }
@@ -83,9 +88,73 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public TourSpeakResponse getTourSpeak(int tourId) {
-        SpeakFile speakFile = speakFileRepository.findByTourId(tourId);
+        String filePath = "";
+
+        Tour tour = tourRepository.findById(tourId).orElseThrow(() ->
+                new NoSuchElementException("해당 id의 여행이 없습니다."));
+
+        try {
+            String text = URLEncoder.encode(tour.getContent(), "UTF-8"); // 13자
+            String apiURL = "https://naveropenapi.apigw.ntruss.com/tts-premium/v1/tts";
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", clientId);
+            con.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
+
+            // post request
+            String postParams = "speaker=nseungpyo&volume=0&speed=0&pitch=0&format=mp3&text=" + text;
+
+            log.info(postParams);
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(postParams);
+            wr.flush();
+            wr.close();
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+            if(responseCode==200) { // 정상 호출
+                InputStream is = con.getInputStream();
+                int read = 0;
+                byte[] bytes = new byte[1024];
+                // 랜덤한 이름으로 mp3 파일 생성
+                String tempname = tour.getId().toString();
+
+                File dir = new File("voice");
+                if(!dir.exists()) dir.mkdir();
+
+                File f = new File(dir, tempname + ".mp3");
+
+                if(f.exists()) {
+                    filePath = f.getAbsolutePath();
+                    log.info(">>> 파일이 있습니다!!");
+                } else {
+                    f.createNewFile();
+
+                    OutputStream outputStream = new FileOutputStream(f);
+                    while ((read =is.read(bytes)) != -1) {
+                        outputStream.write(bytes, 0, read);
+                    }
+
+                    filePath = f.getAbsolutePath();
+                }
+                is.close();
+
+            } else {  // 오류 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+                while ((inputLine = br.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                br.close();
+                System.out.println(response.toString());
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
         return TourSpeakResponse.builder()
-                .filePath(speakFile.getFilePath()).build();
+                .filePath(filePath).build();
     }
 }
