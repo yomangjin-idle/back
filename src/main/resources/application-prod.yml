@@ -11,14 +11,11 @@ spring:
     username: root
     password: root
   jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
     show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        show_sql: true
-      default_batch_fetch_size: 100
+    default_batch_fetch_size: 100
     open-in-view: false
 #    defer-datasource-initialization: true
 
@@ -29,4 +26,4 @@ logging:
 
 naver:
   clientId: ${CLIENT_ID}
-  clientSecret: ${CLIENT_SECRET}
+  clientSecret: ${CLIENT_KEY}
