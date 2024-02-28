@@ -6,7 +6,7 @@ server:
   port: 8080
 spring:
   datasource:
-    url: ${DATABASE_URL}/yomangjin?allowPublicKeyRetrieval=true&useSSL=false
+    url: ${DATABASE_URL}?allowPublicKeyRetrieval=true&useSSL=false
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
     password: root
@@ -20,7 +20,7 @@ spring:
         show_sql: true
       default_batch_fetch_size: 100
     open-in-view: false
-    defer-datasource-initialization: true
+#    defer-datasource-initialization: true
 
 logging:
   level:
