@@ -12,6 +12,7 @@ public class NearTour {
     private Integer id;
     private String name;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tour_id")
     private Tour tour;
     private String content;
     private String address;
