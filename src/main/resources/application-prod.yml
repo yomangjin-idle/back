@@ -5,6 +5,8 @@ server:
       force: true
   port: 8080
 spring:
+  aop:
+    proxy-target-class: false
   datasource:
     url: ${DATABASE_URL}/yomangjin?allowPublicKeyRetrieval=true&useSSL=false
     driver-class-name: org.mariadb.jdbc.Driver

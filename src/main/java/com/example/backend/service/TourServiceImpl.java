@@ -95,12 +95,14 @@ public class TourServiceImpl implements TourService {
             String proxyHost = "http://krmp-proxy.9rum.cc";
             int proxyPort = 3128;
 
-            Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyHost, proxyPort));
-
             String text = URLEncoder.encode(tour.getContent(), "UTF-8"); // 13자
             String apiURL = "https://naveropenapi.apigw.ntruss.com/tts-premium/v1/tts";
             URL url = new URL(apiURL);
+
+            // 프록시 설정
+            Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyHost, proxyPort));
             HttpURLConnection con = (HttpURLConnection)url.openConnection(proxy);
+
             con.setRequestMethod("POST");
             con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", clientId);
             con.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
