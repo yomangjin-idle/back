@@ -41,7 +41,7 @@ public class TourController {
         return ResponseEntity.status(HttpStatus.OK).body(tourService.getTourDetail(tourId));
     }
 
-    @GetMapping("/tour{tourId}/speak")
+    @GetMapping("/tour/{tourId}/speak")
     public ResponseEntity<TourSpeakResponse> getTourSpeak(@PathVariable int tourId) {
         return ResponseEntity.status(HttpStatus.OK).body(tourService.getTourSpeak(tourId));
     }
