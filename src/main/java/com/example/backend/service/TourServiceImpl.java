@@ -1,53 +1,44 @@
 package com.example.backend.service;
 
 import com.example.backend.dto.response.*;
-import com.example.backend.entity.NearTour;
-import com.example.backend.entity.SpeakFile;
 import com.example.backend.entity.Tour;
 import com.example.backend.repository.NearTourRepository;
-import com.example.backend.repository.SpeakFileRepository;
 import com.example.backend.repository.TourRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
-import java.net.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class TourServiceImpl implements TourService {
-//    @Value("${naver.clientId}")
-//    String clientId; //애플리케이션 클라이언트 아이디값";
-//
-//    @Value("${naver.clientSecret}")
-//    String clientSecret; //애플리케이션 클라이언트 시크릿값";
+    @Value("${naver.clientId}")
+    String clientId; //애플리케이션 클라이언트 아이디값";
+
+    @Value("${naver.clientSecret}")
+    String clientSecret; //애플리케이션 클라이언트 시크릿값";
 
     private final TourRepository tourRepository;
     private final NearTourRepository nearTourRepository;
-    private final SpeakFileRepository speakFileRepository;
 
     @Override
     public List<TourListResponse> getTourList() {
         List<Tour> tours = tourRepository.findAll();
 
-        List<TourListResponse> tourListResponse = tours.stream().map(tour -> {
-            return TourListResponse.builder()
-                    .id(tour.getId())
-                    .x(tour.getX())
-                    .y(tour.getY())
-                    .address(tour.getAddress())
-                    .imgPath(tour.getImgPath())
-                    .name(tour.getName())
-                    .build();
-        }).collect(Collectors.toList());
+        List<TourListResponse> tourListResponse =
+                tours.stream().map(tour -> TourListResponse.builder()
+                        .id(tour.getId())
+                        .x(tour.getX())
+                        .y(tour.getY())
+                        .address(tour.getAddress())
+                        .imgPath(tour.getImgPath())
+                        .name(tour.getName())
+                        .build()).collect(Collectors.toList());
 
         return tourListResponse;
     }
@@ -57,7 +48,6 @@ public class TourServiceImpl implements TourService {
         Tour tour = tourRepository.findById(tourId).orElseThrow(() ->
                 new NoSuchElementException("해당 id의 여행이 없습니다."));
 
-        List<NearTour> test = nearTourRepository.findByTourId(tourId);
         List<NearTourResponse> nearTours = nearTourRepository.findByTourId(tourId).stream().map(near -> {
             return NearTourResponse.builder()
                     .name(near.getName())
@@ -90,9 +80,8 @@ public class TourServiceImpl implements TourService {
     public TourSpeakResponse getTourSpeak(int tourId) {
         String filePath = "";
 
-        Tour tour = tourRepository.findById(tourId).orElseThrow(() ->
-                new NoSuchElementException("해당 id의 여행이 없습니다."));
-
+//        Tour tour = tourRepository.findById(tourId).orElseThrow(() ->
+//                new NoSuchElementException("해당 id의 여행이 없습니다."));
 //        try {
 //            String proxyHost = "http://krmp-proxy.9rum.cc";
 //            int proxyPort = 3128;
