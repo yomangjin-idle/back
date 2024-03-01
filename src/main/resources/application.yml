@@ -16,3 +16,7 @@ spring:
         format_sql: true
         show_sql: true
 
+naver:
+  clientId: temp
+  clientSecret: temp
+
