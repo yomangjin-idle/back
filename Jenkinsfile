@@ -1,4 +1,3 @@
-def PROJECT_NAME = 'backend-0.0.1-SNAPSHOT'
 pipeline{
     agent any
     tools {
@@ -17,7 +16,7 @@ pipeline{
         }
         stage('Deploy') {
             steps {
-                sh 'nohup java -jar ./build/libs/${PROJECT_NAME}.jar &'
+                sh 'nohup java -jar ./build/libs/backend-0.0.1-SNAPSHOT.jar'
             }
         }
     }
