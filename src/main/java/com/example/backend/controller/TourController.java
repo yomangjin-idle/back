@@ -27,11 +27,6 @@ public class TourController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/tour/test")
-    public ResponseEntity<String> test() {
-        return ResponseEntity.status(HttpStatus.OK).body("되라!!");
-    }
-
     @GetMapping("/tour")
     @Operation(summary = "메인 화면에서 여행지 리스트를 불러오는 API 입니다.")
     public ResponseEntity<List<TourListResponse>> getTourList() {
@@ -49,5 +44,4 @@ public class TourController {
     public ResponseEntity<TourSpeakResponse> getTourSpeak(@PathVariable int tourId) {
         return ResponseEntity.status(HttpStatus.OK).body(tourService.getTourSpeak(tourId));
     }
-
 }

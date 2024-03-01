@@ -4,6 +4,7 @@ import com.example.backend.dto.response.*;
 import com.example.backend.entity.Tour;
 import com.example.backend.repository.NearTourRepository;
 import com.example.backend.repository.TourRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class TourServiceImpl implements TourService {
     @Value("${naver.clientId}")
