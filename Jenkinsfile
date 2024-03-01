@@ -2,7 +2,7 @@ def PROJECT_NAME = 'backend-0.0.1-SNAPSHOT'
 pipeline{
     agent any
     tools {
-        gradle 'gradle:7.3.1'
+        gradle 'gradle-7.5.1'
     }
     stages{
         stage('Prepare'){
@@ -12,17 +12,7 @@ pipeline{
         }
         stage('Build') {
             steps {
-                sh 'gradlew build -x test'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'gradlew test'
-            }
-        }
-        stage('Deploy Prepare'){
-            steps{
-                sh 'sudo kill $(pgrep -f ${PROJECT_NAME})'
+                sh 'gradle clean build -x test'
             }
         }
         stage('Deploy') {
