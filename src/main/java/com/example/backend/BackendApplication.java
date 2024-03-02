@@ -19,8 +19,7 @@ public class BackendApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:3000")
-						.allowedOrigins("https://neokdeuri-front-sigma.vercel.app");
+						.allowedOrigins("*");
 			}
 		};
 	}
