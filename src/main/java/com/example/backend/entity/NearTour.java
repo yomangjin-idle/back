@@ -17,4 +17,5 @@ public class NearTour {
     private String content;
     private String address;
     private Integer dis;
+    private String imgPath;
 }

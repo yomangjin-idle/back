@@ -35,10 +35,7 @@ public class TourServiceImpl implements TourService {
         List<TourListResponse> tourListResponse =
                 tours.stream().map(tour -> TourListResponse.builder()
                         .id(tour.getId())
-                        .x(tour.getX())
-                        .y(tour.getY())
                         .address(tour.getAddress())
-                        .imgPath(tour.getImgPath())
                         .name(tour.getName())
                         .build()).collect(Collectors.toList());
 
@@ -54,7 +51,8 @@ public class TourServiceImpl implements TourService {
             return NearTourResponse.builder()
                     .name(near.getName())
                     .address(near.getAddress())
-                    .dis(near.getDis()).build();
+                    .dis(near.getDis())
+                    .imgPath(near.getImgPath()).build();
         }).collect(Collectors.toList());
 
         for(NearTourResponse n: nearTours) {
@@ -82,8 +80,8 @@ public class TourServiceImpl implements TourService {
     public TourSpeakResponse getTourSpeak(int tourId) {
         String filePath = "";
 
-//        Tour tour = tourRepository.findById(tourId).orElseThrow(() ->
-//                new NoSuchElementException("해당 id의 여행이 없습니다."));
+        Tour tour = tourRepository.findById(tourId).orElseThrow(() ->
+                new NoSuchElementException("해당 id의 여행이 없습니다."));
 //        try {
 //            String proxyHost = "http://krmp-proxy.9rum.cc";
 //            int proxyPort = 3128;

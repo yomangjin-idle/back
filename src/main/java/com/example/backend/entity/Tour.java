@@ -12,18 +12,15 @@ public class Tour {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Double x;
-    private Double y;
     private String name;
     @Column(columnDefinition = "TEXT")
     private String content;
-    private String imgPath;
     private String address;
     @OneToMany(mappedBy = "tour")
     private List<Image> images;
     @OneToMany(mappedBy = "tour")
     private List<NearTour> nearTours;
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "speak_id")
     private SpeakFile speakFile;
 }

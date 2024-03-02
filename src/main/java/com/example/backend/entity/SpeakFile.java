@@ -12,5 +12,6 @@ public class SpeakFile {
     private Integer id;
     private String filePath;
     @OneToOne(mappedBy = "speakFile")
+    @JoinColumn(name = " tour_id")
     private Tour tour;
 }
