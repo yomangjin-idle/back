@@ -20,7 +20,5 @@ public class Tour {
     private List<Image> images;
     @OneToMany(mappedBy = "tour")
     private List<NearTour> nearTours;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "speak_id")
-    private SpeakFile speakFile;
+    private String speakFilePath;
 }
