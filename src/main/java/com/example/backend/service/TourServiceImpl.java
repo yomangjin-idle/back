@@ -50,6 +50,7 @@ public class TourServiceImpl implements TourService {
         List<NearTourResponse> nearTours = nearTourRepository.findByTourId(tourId).stream().map(near -> {
             return NearTourResponse.builder()
                     .name(near.getName())
+                    .content(near.getContent())
                     .address(near.getAddress())
                     .dis(near.getDis())
                     .imgPath(near.getImgPath()).build();
