@@ -10,12 +10,16 @@ import java.util.List;
 @ToString
 public class TourResponse {
     private Integer id;
+    private String name;
+    private String address;
     private String content;
     private List<ImageResponse> images;
 
     @Builder
-    public TourResponse(Integer id, String content, List<ImageResponse> images) {
+    public TourResponse(Integer id, String name, String address, String content, List<ImageResponse> images) {
         this.id = id;
+        this.name = name;
+        this.address = address;
         this.content = content;
         this.images = images;
     }

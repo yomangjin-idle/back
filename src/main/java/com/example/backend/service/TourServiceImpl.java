@@ -69,6 +69,8 @@ public class TourServiceImpl implements TourService {
 
         TourResponse tourResponse = TourResponse.builder()
                 .id(tour.getId())
+                .name(tour.getName())
+                .address(tour.getAddress())
                 .content(tour.getContent())
                 .images(images)
                 .build();
