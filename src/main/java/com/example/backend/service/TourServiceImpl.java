@@ -72,6 +72,8 @@ public class TourServiceImpl implements TourService {
                 .id(tour.getId())
                 .name(tour.getName())
                 .address(tour.getAddress())
+                .latitude(tour.getLatitude())
+                .longitude(tour.getLongitude())
                 .content(tour.getContent())
                 .images(images)
                 .build();

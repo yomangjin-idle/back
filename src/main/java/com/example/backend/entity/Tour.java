@@ -13,6 +13,8 @@ public class Tour {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    private Double latitude;
+    private Double longitude;
     @Column(columnDefinition = "TEXT")
     private String content;
     private String address;
