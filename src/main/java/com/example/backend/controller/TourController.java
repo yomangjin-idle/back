@@ -22,7 +22,7 @@ import java.util.List;
 public class TourController {
 
     private final TourService tourService;
-    @GetMapping("/test")
+    @GetMapping("/healthcheck")
     public ResponseEntity<Void> testController() {
         return ResponseEntity.ok().build();
     }
