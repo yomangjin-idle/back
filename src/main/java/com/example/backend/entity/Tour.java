@@ -15,6 +15,7 @@ public class Tour {
     private String name;
     private Double latitude;
     private Double longitude;
+    private String outline;
     @Column(columnDefinition = "TEXT")
     private String content;
     private String address;

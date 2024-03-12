@@ -14,16 +14,18 @@ public class TourResponse {
     private String address;
     private Double latitude;
     private Double longitude;
+    private String outline;
     private String content;
     private List<ImageResponse> images;
 
     @Builder
-    public TourResponse(Integer id, String name, String address, Double latitude, Double longitude, String content, List<ImageResponse> images) {
+    public TourResponse(Integer id, String name, String address, Double latitude, Double longitude, String outline, String content, List<ImageResponse> images) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.outline = outline;
         this.content = content;
         this.images = images;
     }
