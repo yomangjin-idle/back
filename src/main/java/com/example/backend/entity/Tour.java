@@ -24,4 +24,6 @@ public class Tour {
     @OneToMany(mappedBy = "tour")
     private List<NearTour> nearTours;
     private String speakFilePath;
+    @Column(columnDefinition = "TEXT")
+    private String script;
 }

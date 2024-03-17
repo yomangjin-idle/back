@@ -76,6 +76,7 @@ public class TourServiceImpl implements TourService {
                 .longitude(tour.getLongitude())
                 .outline(tour.getOutline())
                 .content(tour.getContent())
+                .script(tour.getScript())
                 .images(images)
                 .build();
 
