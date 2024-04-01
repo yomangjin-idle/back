@@ -89,8 +89,10 @@ public class TourServiceImpl implements TourService {
         Tour tour = tourRepository.findById(tourId).orElseThrow(() ->
                 new NoSuchElementException("해당 id의 여행이 없습니다."));
         String filePath = tour.getSpeakFilePath();
+        String script = tour.getScript();
 
         return TourSpeakResponse.builder()
-                .filePath(filePath).build();
+                .filePath(filePath)
+                .script(script).build();
     }
 }
