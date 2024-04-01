@@ -8,9 +8,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TourSpeakResponse {
     private String filePath;
+    private String script;
 
     @Builder
-    public TourSpeakResponse(String filePath) {
+    public TourSpeakResponse(String filePath, String script) {
         this.filePath = filePath;
+        this.script = script;
     }
 }
